@@ -2,10 +2,11 @@
 
 import 'dart:async';
 
+import 'package:qrreaderapp/src/bloc/validator.dart';
 import 'package:qrreaderapp/src/models/scan_model.dart';
 import 'package:qrreaderapp/src/providers/db_provider.dart';
 
-class ScansBloc {
+class ScansBloc with Validators {
   static final ScansBloc _singleton = new ScansBloc._internal();
 
   factory ScansBloc() {
@@ -22,7 +23,14 @@ class ScansBloc {
   final _scansController = StreamController<List<ScanModel>>.broadcast();
 
   // getter que me regresa el flujo de datos en tiempo real.
-  Stream<List<ScanModel>> get scansStream => _scansController.stream;
+
+  // getter para flujo de direcciones geo
+  Stream<List<ScanModel>> get scansStream =>
+      _scansController.stream.transform(validarGeo);
+
+  // getter para flujo de sitios web http
+  Stream<List<ScanModel>> get scansStreamHttp =>
+      _scansController.stream.transform(validarHttp);
 
   // Cerrar StreamController
   dispose() {

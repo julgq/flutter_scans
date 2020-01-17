@@ -11,7 +11,7 @@ class DireccionesPage extends StatelessWidget {
     scansBloc.obtenerScans();
     // Para utilizar el stram se usa un StreamBuilder
     return StreamBuilder<List<ScanModel>>(
-        stream: scansBloc.scansStream,
+        stream: scansBloc.scansStreamHttp,
         builder:
             (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
           // Validar sí existe data:

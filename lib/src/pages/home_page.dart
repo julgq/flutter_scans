@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:qrreaderapp/src/bloc/scans_bloc.dart';
 import 'package:qrreaderapp/src/models/scan_model.dart';
@@ -45,13 +46,13 @@ class _HomePageState extends State<HomePage> {
     // geo:40.70133238380897,-74.1803492589844
 
     print('Scan QR Plugin');
-    String futureString = 'http://www.perfilan.com';
-
-    /*try {
+    //String futureString = 'http://www.perfilan.com';
+    String futureString;
+    try {
       futureString = await BarcodeScanner.scan();
     } catch (e) {
       futureString = e.toString();
-    }*/
+    }
 
     print('Future String: $futureString');
 
@@ -59,9 +60,6 @@ class _HomePageState extends State<HomePage> {
       print('Tenemos información');
       final scan = ScanModel(valor: futureString);
       scansBloc.agregarScan(scan);
-
-      final scan2 = ScanModel(valor: 'geo:40.70133238380897,-74.1803492589844');
-      scansBloc.agregarScan(scan2);
 
       if (Platform.isIOS) {
         Future.delayed(Duration(milliseconds: 750), () {
